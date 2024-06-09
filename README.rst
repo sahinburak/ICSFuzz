@@ -2,6 +2,15 @@
 ICSFuzz: Fuzzing Tool for ICS Control Applications
 ******************************************************
 
+ICSFuzz for using with Modbus in Phython
+========
+```
+gcc fuzzer.c mutator.c mutator.h -o icsfuzz
+./icsfuzz > icsfuzz_results
+# remove reduntants
+python filter.py
+```
+
 Overview
 ========
 

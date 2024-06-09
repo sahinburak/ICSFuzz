@@ -159,8 +159,11 @@ int addr_calc(char *proc_maps, int tid){
 		
 	
 
-int main(int argc, char* argv[]) {
+int main_works_for_memory(int argc, char* argv[]) {
 
+	printf("%d\n", argc);
+	printf("%s\n", argv[0]);
+	printf("%s\n", argv[1]);
  	if (argc != 3) {
     		printf("proc-2  pid  addr  length\n");
    		exit(1);
@@ -225,3 +228,60 @@ int main(int argc, char* argv[]) {
   	return 0;
 
 }
+
+// new main for modbus
+int main() {
+                    
+
+	/* int start_val = 0x11111111; */
+	/* char *buf2 = malloc(4*sizeof(uint8_t)); */
+	/* sprintf(buf2, "%d", start_val); */
+	/* int len2 = strlen(buf2); */
+	/* printf("len2 %d\n", len2); */
+
+	
+	/* FILE *fd_proc_maps; */
+  	int fd_proc_mem;
+  	unsigned long addr;
+  	int len  = 9;
+  	/* char *buf = malloc(len); */
+	char *buf = malloc(4*sizeof(uint8_t));
+  	int seed_input = 0xdeadbeef;
+	seed_input = 0x11111111;
+	seed_input = 100;
+  	sprintf(buf, "%u", seed_input);
+	len = strlen(buf);
+	printf("buf %s\n", buf);
+	/* printf("%X", seed_input); */
+	/* printf("%X\n", *buf); */
+
+	char str[10];
+	/* scanf("%s", str); */
+	while(1){
+		uint32_t retval = fuzzing_engine(fd_proc_mem, addr, buf, len);
+		printf("RETVAL: %d\n", retval);
+		sprintf(buf, "%d", retval);
+		printf("buf %s\n", buf);
+		/* scanf("%s", str); */
+	}
+	
+	
+  	free(buf);
+
+  	return 0;
+
+}
+
+/*int main(){
+	
+
+	int start_val = 0x11111111;
+	char *buf = malloc(4*sizeof(uint8_t));
+	sprintf(buf, "%d", start_val);
+	int len = strlen(buf);
+	
+	for(int i=0; i<5; i++){
+		uint32_t retval = fuzzing_engine(buf, len);
+		sprintf(buf, "%d", retval);
+	}
+}*/
